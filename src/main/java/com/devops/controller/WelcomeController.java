@@ -8,6 +8,7 @@ public class WelcomeController {
 
     @GetMapping("/welcome")
     public String welcome() {
+        System.out.println("Testing triggering polls");
         return "Welcome to DevOps Automation Application!";
     }
 }
