@@ -1,0 +1,18 @@
+# Build stage
+FROM maven:3.8-openjdk-11 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Run stage
+FROM openjdk:11-jre-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+# Add timestamp and user information
+LABEL build.timestamp="2025-05-05 06:49:09"
+LABEL build.user="manojasdc"
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
